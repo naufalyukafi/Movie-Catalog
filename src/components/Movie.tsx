@@ -6,7 +6,8 @@ import { IMovieListData } from "../types"
 import MovieList from "./MovieList"
 
 const Movie = () => {
-    const [movie, setMovie] = React.useState<IMovieListData>()
+    const [movie, setMovie] = React.useState<IMovieListData>();
+    const [data, setData] = React.useState("")
     const fetchMovie = async () => {
         try {
             const result = await axios(`${BASE_URL}/discover/movie?api_key=${API_KEY}`)
@@ -18,21 +19,48 @@ const Movie = () => {
     React.useEffect(() => {
         fetchMovie();
     }, [])
+
+
+    const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+        setData(event.target.value)
+    }
+
+    const filteredData = movie?.results.filter(item => {
+        return item.original_title.toLowerCase().includes(data.toLowerCase())
+    })
+
+
     return (
         <Layout className="container" style={{ backgroundColor: "#222" }}>
             <Typography.Title level={3} style={{ textAlign: 'center', marginTop: 10, color: "#fff" }} >Movie Catalogue</Typography.Title>
-            <Input.Search allowClear enterButton placeholder="Search movie in here ..." />
+            <Input.Search
+                allowClear
+                enterButton
+                placeholder="Search movie in here ..."
+                onChange={handleChange}
+                value={data}
+            />
             <Layout.Content>
-                {movie?.results.map(item => (
-                    <MovieList
-                        key={item.id}
-                        id={item.id}
-                        backdrop_path={item.backdrop_path}
-                        original_title={item.original_title}
-                        release_date={item.release_date}
-                        vote_average={item.vote_average}
-                    />
-                ))}
+                {data.length > 0 ?
+                    filteredData?.map(item => (
+                        <MovieList
+                            key={item.id}
+                            id={item.id}
+                            backdrop_path={item.backdrop_path}
+                            original_title={item.original_title}
+                            release_date={item.release_date}
+                            vote_average={item.vote_average}
+                        />
+                    )) : movie?.results.map(item => (
+                        <MovieList
+                            key={item.id}
+                            id={item.id}
+                            backdrop_path={item.backdrop_path}
+                            original_title={item.original_title}
+                            release_date={item.release_date}
+                            vote_average={item.vote_average}
+                        />
+                    ))}
 
             </Layout.Content>
         </Layout>
