@@ -3,7 +3,7 @@ import { Typography, Input, Layout } from "antd"
 import axios from "axios";
 import { API_KEY, BASE_URL } from "../store";
 import { IMovieListData } from "../types"
-import MovieList from "./MovieList"
+import MovieList from "../components/MovieList"
 
 const Movie = () => {
     const [movie, setMovie] = React.useState<IMovieListData>();

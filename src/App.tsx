@@ -5,13 +5,14 @@ import {
   Route,
   Redirect
 } from "react-router-dom";
-import { Movie } from "./components"
+import { Movie, DetailMovie } from "./Pages"
 const App = () => {
   return (
     <Router>
       <Switch>
-        <Route path="/" component={Movie} />
-        <Redirect to="/" />
+        <Route exact path="/" component={Movie} />
+        <Route path="/detail" component={DetailMovie} />
+        <Redirect to="/detail" />
       </Switch>
     </Router>
   )
