@@ -1,5 +1,6 @@
 import React from "react"
 import { Typography, Input, Layout } from "antd"
+import { Link } from "react-router-dom"
 import axios from "axios";
 import { API_KEY, BASE_URL } from "../store";
 import { IMovieListData } from "../types"
@@ -43,23 +44,27 @@ const Movie = () => {
             <Layout.Content>
                 {data.length > 0 ?
                     filteredData?.map(item => (
-                        <MovieList
-                            key={item.id}
-                            id={item.id}
-                            backdrop_path={item.backdrop_path}
-                            original_title={item.original_title}
-                            release_date={item.release_date}
-                            vote_average={item.vote_average}
-                        />
+                        <Link to={`/detail/${item.id}`}>
+                            <MovieList
+                                key={item.id}
+                                id={item.id}
+                                backdrop_path={item.backdrop_path}
+                                original_title={item.original_title}
+                                release_date={item.release_date}
+                                vote_average={item.vote_average}
+                            />
+                        </Link>
                     )) : movie?.results.map(item => (
-                        <MovieList
-                            key={item.id}
-                            id={item.id}
-                            backdrop_path={item.backdrop_path}
-                            original_title={item.original_title}
-                            release_date={item.release_date}
-                            vote_average={item.vote_average}
-                        />
+                        <Link to={`/detail/${item.id}`}>
+                            <MovieList
+                                key={item.id}
+                                id={item.id}
+                                backdrop_path={item.backdrop_path}
+                                original_title={item.original_title}
+                                release_date={item.release_date}
+                                vote_average={item.vote_average}
+                            />
+                        </Link>
                     ))}
 
             </Layout.Content>
