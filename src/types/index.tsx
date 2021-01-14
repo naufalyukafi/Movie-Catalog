@@ -35,3 +35,7 @@ export interface ICompaniesMovie {
     logo_path: string,
     name: string
 }
+
+export interface IdDetailMovie {
+    id: string
+}

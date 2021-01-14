@@ -1,22 +1,19 @@
 import React from 'react'
 import { Typography, Layout, Button, Row, Col, Image } from "antd"
-import { LeftOutlined } from '@ant-design/icons';
-import { Link, useParams } from "react-router-dom"
-import axios from "axios";
-import { API_KEY, BASE_URL, POSTER_PATH } from "../store";
+import { LeftOutlined } from '@ant-design/icons'
+import { Link } from "react-router-dom"
+import { POSTER_PATH } from "../store"
 import { IDetailMovieApi } from "../types"
 import { formatMoney } from "../constants/utils"
+import { useRequestMovie } from "../utils/APIUtils"
 
-interface IdDetailMovie {
-    id: string
-}
 const DetailMovie = () => {
     const [detailMovie, setDetailMovie] = React.useState<IDetailMovieApi>()
-    const { id } = useParams<IdDetailMovie>();
+    const { getIdMovie } = useRequestMovie()
 
     const fetchMovie = async () => {
         try {
-            const result = await axios.get(`${BASE_URL}/movie/${id}?api_key=${API_KEY}`)
+            const result = await getIdMovie()
             setDetailMovie(result.data)
         } catch (error) {
             console.log(error)

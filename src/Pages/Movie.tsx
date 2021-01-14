@@ -1,18 +1,18 @@
 import React from "react"
 import { Typography, Input, Layout, Spin, Col } from "antd"
 import { Link } from "react-router-dom"
-import axios from "axios";
-import { API_KEY, BASE_URL } from "../store";
 import { IMovieListData } from "../types"
 import MovieList from "../components/MovieList"
+import { useRequestMovie } from "../utils/APIUtils"
 
 const Movie = () => {
     const [movie, setMovie] = React.useState<IMovieListData>();
     const [data, setData] = React.useState("");
     const [loading, setLoading] = React.useState(true);
+    const { getAllMovie } = useRequestMovie()
     const fetchMovie = async () => {
         try {
-            const result = await axios(`${BASE_URL}/discover/movie?api_key=${API_KEY}`)
+            const result = await getAllMovie();
             setMovie(result.data)
             setLoading(false)
         } catch (error) {
